@@ -3,6 +3,8 @@ const username = "sarahbcodes";
 const repoList = document.querySelector(".repo-list");
 const repoDisplay = document.querySelector(".repos");
 const repoData = document.querySelector(".repo-data");
+const backButton = document.querySelector(".view-repos");
+const filterInput = document.querySelector(".filter-repos");
 
 const users = async function () {
     const userInfo = await fetch(`https://api.github.com/users/${username}`);
@@ -40,6 +42,7 @@ const publicRepos = async function () {
 
 //display repo info//
 const displayRepoInfo = async function (repos) {
+  filterInput.classList.remove("hide");
   for (const repo of repos) {
     const repoItem = document.createElement("li");
     repoItem.classList.add("repo");
@@ -78,6 +81,7 @@ const displaySelectedRepoInfo = function (repoInfo, languages) {
   repoData.innerHTML = "";
   repoData.classList.remove("hide");
   repoDisplay.classList.add("hide");
+  backButton.classList.remove("hide");
   const div = document.createElement("div");
   div.innerHTML = `
     <h3>Name: ${repoInfo.name}</h3>
@@ -88,3 +92,24 @@ const displaySelectedRepoInfo = function (repoInfo, languages) {
   `;
   repoData.append(div);
 };
+
+backButton.addEventListener("click", function () {
+  repoDisplay.classList.remove("hide");
+  repoData.classList.add("hide");
+  backButton.classList.add("hide");
+});
+
+filterInput.addEventListener("input", function (e) {
+    const searchText = e.target.value;
+    const repos = document.querySelectorAll(".repo");
+    const lowercaseSearch = searchText.toLowerCase();
+
+    for (const repo of repos) {
+      const repoLowercase = repo.innerText.toLowerCase();
+      if (repoLowercase.includes(lowercaseSearch)) {
+        repo.classList.remove("hide");
+      } else {
+        repo.classList.add("hide");
+      }
+    }    
+});
