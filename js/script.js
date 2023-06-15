@@ -1,7 +1,7 @@
 const overview = document.querySelector(".overview");
 const username = "sarahbcodes";
 const repoList = document.querySelector(".repo-list");
-const repoDisplay = document.querySelector(".repo");
+const repoDisplay = document.querySelector(".repos");
 const repoData = document.querySelector(".repo-data");
 
 const users = async function () {
@@ -64,7 +64,7 @@ const selectedRepoInfo = async function (repoName) {
   const fetchLanguages = await fetch(repoInfo.languages_url);
   const languageData = await fetchLanguages.json();
   // console.log(languageData);
-  
+
 // create a list of languages //
   const languages = [];
   for (const language in languageData) {
